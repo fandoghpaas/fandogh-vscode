@@ -1,0 +1,54 @@
+{
+    "name": "fandogh-vscode",
+    "displayName": "fandogh",
+    "description": "fandogh vscode client",
+    "version": "0.0.1",
+    "publisher": "rezahaidari",
+    "engines": {
+        "vscode": "^1.25.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.login",
+        "onCommand:extension.deploy",
+        "onCommand:extension.create_image",
+        "onCommand:extension.create_version"
+    ],
+    "main": "./src/extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.login",
+                "title": "fandogh login"
+            },
+            {
+                "command": "extension.deploy",
+                "title": "fandogh deploy"
+            },
+            {
+                "command": "extension.create_image",
+                "title": "fandogh create image"
+            },
+            {
+                "command": "extension.create_version",
+                "title": "fandogh build version"
+            }
+        ]
+    },
+    "scripts": {
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.6",
+        "eslint": "^4.11.0",
+        "@types/node": "^7.0.43",
+        "@types/mocha": "^2.2.42"
+    },
+    "dependencies": {
+        "fandogh": "^0.2.1"
+    }
+}
