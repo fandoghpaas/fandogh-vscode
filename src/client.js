@@ -78,8 +78,9 @@ class Client {
       let name = await vscode.window.showInputBox({placeHolder: 'Enter image Name', value: imageName || ''})
       let version  = await vscode.window.showInputBox({placeHolder: 'enter Image Version', value: imageVersion || ''})
       let service  = await vscode.window.showInputBox({placeHolder: 'Enter service name', value: serviceName || ''})
-      service = await fandogh.createService({image_name: name, image_version: version, service_name: service, token})
-      vscode.window.showInformationMessage(service);
+      let service_ = await fandogh.createService({image_name: name, image_version: version, service_name: service, token})
+      vscode.window.showInformationMessage('service deployed successfully');
+      vscode.window.showInformationMessage(service_.url);
 
       await Client.updateState([{name:'image', value: name}, {name: 'version', value: version}, {name: 'service', value: service}], context)
 
