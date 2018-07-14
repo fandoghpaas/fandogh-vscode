@@ -15,7 +15,7 @@ function activate(context) {
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
-    let user_login = vscode.commands.registerCommand('extension.login', async function () {      
+    let user_login = vscode.commands.registerCommand('extension.login', async function () {   
        await login(context)
     });
 
@@ -32,9 +32,9 @@ function activate(context) {
     await createService(context)
   });
 
-  let deploy = vscode.commands.registerCommand('extension.deploy', async function () {      
+  let deploy = vscode.commands.registerCommand('extension.deploy', async function () {
+    await createImage(context)      
     await createVersion(context)
-    await createImage(context)
     await createService(context)
   });
 
