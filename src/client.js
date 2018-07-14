@@ -93,7 +93,7 @@ class Client {
         Promise.reject(e)
     }
   }
- 
+
 }
 
 module.exports = Client
