@@ -35,10 +35,10 @@ class Client {
   async createImage(context) {
     try {
       let token = await Client.init(context)
-      let name = await vscode.window.showInputBox({placeHolder: 'Image Name'})
+      let name = await vscode.window.showInputBox({placeHolder: 'Enter image name'})
       let image = await fandogh.createImage({name, token})
-      vscode.window.showInformationMessage(image.message);
-      await Client.updateState([{name:'image', value: name}])
+      vscode.window.showInformationMessage(image);
+      await Client.updateState([{name:'image', value: name}], context)
       return image
     } catch(e){
         vscode.window.showErrorMessage(e.message)
@@ -49,14 +49,15 @@ class Client {
     try {
 
       let token = await Client.init(context)
-
+      let ws = vscode.workspace.workspaceFolders
+      
       let imageName =  await context.globalState.get('fandogh.image')
-      let name = await vscode.window.showInputBox({placeHolder: 'Image Name', value: imageName || ''})
-      let version  = await vscode.window.showInputBox({placeHolder: 'Image Version'})
-      version = await fandogh.createVersion({name, version, token, source: __dirname})
-      vscode.window.showInformationMessage(version.message);
-      await Client.updateState([{name:'image', value: name}, {name: 'version', value: version}])
-      return version
+      let name = await vscode.window.showInputBox({placeHolder: 'Enter image name', value: imageName || ''})
+      let version  = await vscode.window.showInputBox({placeHolder: 'Enter image version'})
+      let version_ = await fandogh.createVersion({name, version, token, source: ws[0].uri.fsPath})
+      vscode.window.showInformationMessage(version_);
+      await Client.updateState([{name:'image', value: name}, {name: 'version', value: version}], context)
+      return version_
     } catch(e){
       if(e.message){
         vscode.window.showErrorMessage(e.message)
@@ -74,13 +75,13 @@ class Client {
       let imageName =  await context.globalState.get('fandogh.image')
       let imageVersion =  await context.globalState.get('fandogh.version')
       let serviceName =  await context.globalState.get('fandogh.service')
-      let name = await vscode.window.showInputBox({placeHolder: 'Image Name', value: imageName || ''})
-      let version  = await vscode.window.showInputBox({placeHolder: 'Image Version', value: imageVersion || ''})
-      let service  = await vscode.window.showInputBox({placeHolder: 'Image Version', value: serviceName || ''})
+      let name = await vscode.window.showInputBox({placeHolder: 'Enter image Name', value: imageName || ''})
+      let version  = await vscode.window.showInputBox({placeHolder: 'enter Image Version', value: imageVersion || ''})
+      let service  = await vscode.window.showInputBox({placeHolder: 'Enter service name', value: serviceName || ''})
       service = await fandogh.createService({image_name: name, image_version: version, service_name: service, token})
-      vscode.window.showInformationMessage(service.message);
+      vscode.window.showInformationMessage(service);
 
-      await Client.updateState([{name:'image', value: name}, {name: 'version', value: version}, {name: 'service', value: service}])
+      await Client.updateState([{name:'image', value: name}, {name: 'version', value: version}, {name: 'service', value: service}], context)
 
       return service
       
