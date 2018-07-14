@@ -13,6 +13,12 @@ class Client {
     return token
   }
 
+  static async updateState(states, context){
+    await Promise.all(states.map(async state => {
+      await context.globalState.update('fandogh.'+state.name, state.value)
+    }))
+  }
+
   async login(context) {
     try {
       let username = await vscode.window.showInputBox({placeHolder: 'Username'})
@@ -32,7 +38,7 @@ class Client {
       let name = await vscode.window.showInputBox({placeHolder: 'Image Name'})
       let image = await fandogh.createImage({name, token})
       vscode.window.showInformationMessage(image.message);
-      await context.globalState.update('fandogh.image', name)
+      await Client.updateState([{name:'image', value: name}])
       return image
     } catch(e){
         vscode.window.showErrorMessage(e.message)
@@ -49,8 +55,7 @@ class Client {
       let version  = await vscode.window.showInputBox({placeHolder: 'Image Version'})
       version = await fandogh.createVersion({name, version, token, source: __dirname})
       vscode.window.showInformationMessage(version.message);
-      await context.globalState.update('fandogh.image', name)
-      await context.globalState.update('fandogh.version', version)
+      await Client.updateState([{name:'image', value: name}, {name: 'version', value: version}])
       return version
     } catch(e){
       if(e.message){
@@ -75,9 +80,7 @@ class Client {
       service = await fandogh.createService({image_name: name, image_version: version, service_name: service, token})
       vscode.window.showInformationMessage(service.message);
 
-      await context.globalState.update('fandogh.image', name)
-      await context.globalState.update('fandogh.version', version)
-      await context.globalState.update('fandogh.service', service)
+      await Client.updateState([{name:'image', value: name}, {name: 'version', value: version}, {name: 'service', value: service}])
 
       return service
       
