@@ -8,7 +8,7 @@ class Client {
     if(!token) {
       let error = 'please login to fandogh'
       vscode.window.showErrorMessage(error)
-      token = await Client.login(context)
+      token = await new Client().login(context)
     }
     return token
   }
