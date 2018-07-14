@@ -5,7 +5,7 @@
     "version": "0.0.2",
     "publisher": "rezahaidari",
     "repository": "https://github.com/RezaHaidari/fandogh-vscode",
-    "icon": "https://avatars0.githubusercontent.com/u/39274753?s=200&v=4",
+    "icon": "icon.png",
     "engines": {
         "vscode": "^1.25.0"
     },
