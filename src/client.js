@@ -1,9 +1,19 @@
 const vscode = require('vscode');
 const fandogh = require('fandogh')
 
-const Client = {
-  
-  login: async (context) => {
+class Client {
+
+  static async init(context){
+    let token = await context.globalState.get('fandogh.token')
+    if(!token) {
+      let error = 'please login to fandogh'
+      vscode.window.showErrorMessage(error)
+      token = await Client.login(context)
+    }
+    return token
+  }
+
+  async login(context) {
     try {
       let username = await vscode.window.showInputBox({placeHolder: 'Username'})
       let password = await vscode.window.showInputBox({placeHolder: 'Password', password: true})
@@ -15,16 +25,11 @@ const Client = {
         vscode.window.showErrorMessage(e.message)
         Promise.reject(e)
     }
-  },
-  createImage: async (context) => {
+  }
+  async createImage(context) {
     try {
+      let token = await Client.init(context)
       let name = await vscode.window.showInputBox({placeHolder: 'Image Name'})
-      let token = await context.globalState.get('fandogh.token')
-      if(!token) {
-        let error = 'please login to fandogh'
-        vscode.window.showErrorMessage(error)
-        return Promise.reject(error)
-      }
       let image = await fandogh.createImage({name, token})
       vscode.window.showInformationMessage(image.message);
       await context.globalState.update('fandogh.image', name)
@@ -33,23 +38,19 @@ const Client = {
         vscode.window.showErrorMessage(e.message)
         Promise.reject(e)
     }
-  },
-  createVersion: async (context) => {
+  }
+  async createVersion(context){
     try {
 
-      let imageName =  await context.globalState.get('fandogh.image')
+      let token = await Client.init(context)
 
+      let imageName =  await context.globalState.get('fandogh.image')
       let name = await vscode.window.showInputBox({placeHolder: 'Image Name', value: imageName || ''})
       let version  = await vscode.window.showInputBox({placeHolder: 'Image Version'})
-      let token = await context.globalState.get('fandogh.token')
-      if(!token) {
-        let error = 'please login to fandogh'
-        vscode.window.showErrorMessage(error)
-        return Promise.reject(error)
-      }
       version = await fandogh.createVersion({name, version, token, source: __dirname})
       vscode.window.showInformationMessage(version.message);
       await context.globalState.update('fandogh.image', name)
+      await context.globalState.update('fandogh.version', version)
       return version
     } catch(e){
       if(e.message){
@@ -60,6 +61,36 @@ const Client = {
         Promise.reject(e)
     }
   }
+  async createService (context){
+    try {
+
+      let token = await Client.init(context)
+
+      let imageName =  await context.globalState.get('fandogh.image')
+      let imageVersion =  await context.globalState.get('fandogh.version')
+      let serviceName =  await context.globalState.get('fandogh.service')
+      let name = await vscode.window.showInputBox({placeHolder: 'Image Name', value: imageName || ''})
+      let version  = await vscode.window.showInputBox({placeHolder: 'Image Version', value: imageVersion || ''})
+      let service  = await vscode.window.showInputBox({placeHolder: 'Image Version', value: serviceName || ''})
+      service = await fandogh.createService({image_name: name, image_version: version, service_name: service, token})
+      vscode.window.showInformationMessage(service.message);
+
+      await context.globalState.update('fandogh.image', name)
+      await context.globalState.update('fandogh.version', version)
+      await context.globalState.update('fandogh.service', service)
+
+      return service
+      
+    } catch(e){
+      if(e.message){
+        vscode.window.showErrorMessage(e.message)
+      } else {
+        vscode.window.showErrorMessage(e)
+      }
+        Promise.reject(e)
+    }
+  }
+ 
 }
 
 module.exports = Client

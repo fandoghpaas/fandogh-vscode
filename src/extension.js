@@ -2,8 +2,8 @@
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
 const fandogh = require('fandogh')
-const {login, createImage, createVersion} = require('./client')
-
+const Client = require('./client')
+const {login, createImage, createVersion, createService} = new Client()
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 function activate(context) {
@@ -21,21 +21,26 @@ function activate(context) {
 
     let create_version = vscode.commands.registerCommand('extension.create_version', async function () {      
       await createVersion(context)
-   });
+    });
 
    let create_image = vscode.commands.registerCommand('extension.create_image', async function () {      
      await createImage(context)
-  });
-
-    let deploy = vscode.commands.registerCommand('extension.deploy', async function () {      
-      console.log('deploy')
+    
    });
 
+  let create_service = vscode.commands.registerCommand('extension.create_service', async function () {      
+    await createService(context)
+  });
 
-    context.subscriptions.push(user_login);
-    context.subscriptions.push(deploy);
-    context.subscriptions.push(create_image);
-    context.subscriptions.push(create_version);
+  let deploy = vscode.commands.registerCommand('extension.deploy', async function () {      
+    console.log('deploy')
+  });
+
+  context.subscriptions.push(user_login);
+  context.subscriptions.push(deploy);
+  context.subscriptions.push(create_image);
+  context.subscriptions.push(create_version);
+  context.subscriptions.push(create_service);
 }
 exports.activate = activate;
 

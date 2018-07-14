@@ -14,7 +14,8 @@
         "onCommand:extension.login",
         "onCommand:extension.deploy",
         "onCommand:extension.create_image",
-        "onCommand:extension.create_version"
+        "onCommand:extension.create_version",
+        "onCommand:extension.create_service"
     ],
     "main": "./src/extension",
     "contributes": {
@@ -34,6 +35,10 @@
             {
                 "command": "extension.create_version",
                 "title": "fandogh build version"
+            },
+            {
+                "command": "extension.create_service",
+                "title": "fandogh run service"
             }
         ]
     },
