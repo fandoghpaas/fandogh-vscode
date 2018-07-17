@@ -33,7 +33,7 @@ function activate(context) {
   });
 
   let deploy = vscode.commands.registerCommand('extension.deploy', async function () {
-    await createImage(context)      
+    await createImage(context, true)      
     await createVersion(context)
     await createService(context)
   });

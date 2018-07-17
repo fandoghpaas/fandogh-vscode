@@ -41,11 +41,15 @@ class Client {
         Promise.reject(e)
     }
   }
-  async createImage(context) {
+  async createImage(context, isDeploy) {
     try {
+      let config = await fandogh.config(ws[0].uri.fsPath)
+      if(isDeploy && config['app.name']) {
+        return vscode.window.showInformationMessage('Your app name: '+config['app.name']); 
+      }
       let token = await Client.init(context)
       let name = await vscode.window.showInputBox({placeHolder: 'Enter image name'})
-      let image = await fandogh.createImage({name, token})
+      let image = await fandogh.createImage({name, token, source: ws[0].uri.fsPath})
       vscode.window.showInformationMessage(image);
       await Client.updateState([{name:'image', value: name}], context)
       return image
@@ -68,8 +72,12 @@ class Client {
   async createVersion(context){
     try {
       let token = await Client.init(context)
+      let config = await fandogh.config(ws[0].uri.fsPath)
       let imageName =  await context.globalState.get('fandogh.image')
-      let name = await vscode.window.showInputBox({placeHolder: 'Enter image name', value: imageName || ''})
+      if(config && config['app.name']){
+        imageName = config['app.name']
+      }
+      let name = imageName || await vscode.window.showInputBox({placeHolder: 'Enter image name'})
       let version  = await vscode.window.showInputBox({placeHolder: 'Enter image version'})
       let version_ = await fandogh.createVersion({name, version, token, source: ws[0].uri.fsPath})
       vscode.window.showInformationMessage(version_);
@@ -81,12 +89,13 @@ class Client {
       }
       else {
         let error = e.error
-        if(e.message){
+        if(error.message){
           vscode.window.showErrorMessage(error.message)
         } else {
           vscode.window.showErrorMessage(error)
         }
-          Promise.reject(e)
+        if(e.code === 'dockerfile-404') throw error
+        Promise.reject(e)
       }
     }
   }
@@ -94,14 +103,17 @@ class Client {
     try {
 
       let token = await Client.init(context)
-
+      let config = await fandogh.config(ws[0].uri.fsPath)
       let imageName =  await context.globalState.get('fandogh.image')
+      if(config && config['app.name']){
+        imageName = config['app.name']
+      }
       let imageVersion =  await context.globalState.get('fandogh.version')
       let serviceName =  await context.globalState.get('fandogh.service')
-      let name = await vscode.window.showInputBox({placeHolder: 'Enter image Name', value: imageName || ''})
+      let name = imageName || await vscode.window.showInputBox({placeHolder: 'Enter image Name'})
       let version  = await vscode.window.showInputBox({placeHolder: 'enter Image Version', value: imageVersion || ''})
       let service  = await vscode.window.showInputBox({placeHolder: 'Enter service name', value: serviceName || ''})
-      let service_ = await fandogh.createService({image_name: name, image_version: version, service_name: service, token})
+      let service_ = await fandogh.createService({image_name: name, image_version: version, service_name: service, token, source: ws[0].uri.fsPath})
       vscode.window.showInformationMessage('service deployed successfully');
       vscode.window.showInformationMessage(service_.url);
 
