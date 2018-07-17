@@ -19,6 +19,11 @@ class Client {
       await context.globalState.update('fandogh.'+state.name, state.value)
     }))
   }
+  static async handleAutheticationError({error, context, method}) {
+    vscode.window.showErrorMessage(error.message);
+    await new Client().login(context)
+    await new Client()[method](context)
+  }
   async login(context) {
     try {
       let global_username = await context.globalState.get('fandogh.username')
@@ -46,9 +51,7 @@ class Client {
       return image
     } catch(e){
         if(e.code === 401){
-          vscode.window.showErrorMessage(e.error.message);
-          await new Client().login(context)
-          await new Client().createImage(context)
+          await Client.handleAutheticationError({error: e.error, context, method:'createImage'})
         } else {
           let error = e.error
           if(typeof error === 'string'){
@@ -74,9 +77,7 @@ class Client {
       return version_
     } catch(e){
       if(e.code === 401){
-        vscode.window.showErrorMessage(e.error.message);
-        await new Client().login(context)
-        await new Client().createVersion(context)
+        await Client.handleAutheticationError({error: e.error, context, method:'createVersion'})
       }
       else {
         let error = e.error
@@ -110,9 +111,7 @@ class Client {
       
     } catch(e){
       if(e.code === 401){
-        vscode.window.showErrorMessage(e.error.message);
-        await new Client().login(context)
-        await new Client().createService(context)
+        await Client.handleAutheticationError({error: e.error, context, method:'createService'})
       }
       else {
         let error = e.error
