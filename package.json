@@ -5,9 +5,9 @@
     "version": "0.0.5",
     "publisher": "rezahaidari",
     "repository": "https://github.com/RezaHaidari/fandogh-vscode",
-    "icon": "icon.png",
+    "icon": "icon.png",    
     "engines": {
-        "vscode": "^1.25.0"
+        "vscode": "^1.29.0"
     },
     "categories": [
         "Other"
@@ -17,9 +17,10 @@
         "onCommand:extension.deploy",
         "onCommand:extension.create_image",
         "onCommand:extension.create_version",
-        "onCommand:extension.create_service"
+        "onCommand:extension.create_service",
+        "onCommand:extension.open_file"
     ],
-    "main": "./src/extension",
+    "main": "./lib/extension",
     "contributes": {
         "commands": [
             {
@@ -41,6 +42,10 @@
             {
                 "command": "extension.create_service",
                 "title": "fandogh run service"
+            },
+            {
+                "command": "extension.open_file",
+                "title": "fandogh open file"
             }
         ]
     },
@@ -49,13 +54,13 @@
         "test": "node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.6",
+        "typescript": "^3.1.4",
+        "vscode": "^1.1.25",
         "eslint": "^4.11.0",
-        "@types/node": "^7.0.43",
+        "@types/node": "^8.10.25",
         "@types/mocha": "^2.2.42"
     },
     "dependencies": {
-        "fandogh": "0.3.0"
+        "fandogh": "0.5.0"
     }
 }
