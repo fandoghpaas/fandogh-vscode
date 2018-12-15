@@ -15,7 +15,8 @@
     "activationEvents": [
         "onCommand:extension.login",
         "onCommand:extension.create_service",
-        "onCommand:extension.open_file"
+        "onCommand:extension.open_file",
+        "onCommand:extension.show_version_logs"
     ],
     "main": "./lib/extension",
     "contributes": {
@@ -31,7 +32,12 @@
             {
                 "command": "extension.open_file",
                 "title": "fandogh open config"
+            },
+            {
+                "command": "extension.show_version_logs",
+                "title": "fandogh version build logs"
             }
+            
         ]
     },
     "scripts": {
