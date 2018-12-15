@@ -14,9 +14,6 @@
     ],
     "activationEvents": [
         "onCommand:extension.login",
-        "onCommand:extension.deploy",
-        "onCommand:extension.create_image",
-        "onCommand:extension.create_version",
         "onCommand:extension.create_service",
         "onCommand:extension.open_file"
     ],
@@ -28,24 +25,12 @@
                 "title": "fandogh login"
             },
             {
-                "command": "extension.deploy",
-                "title": "fandogh deploy"
-            },
-            {
-                "command": "extension.create_image",
-                "title": "fandogh create image"
-            },
-            {
-                "command": "extension.create_version",
-                "title": "fandogh build version"
-            },
-            {
                 "command": "extension.create_service",
-                "title": "fandogh run service"
+                "title": "fandogh deploy app"
             },
             {
                 "command": "extension.open_file",
-                "title": "fandogh open file"
+                "title": "fandogh open config"
             }
         ]
     },
