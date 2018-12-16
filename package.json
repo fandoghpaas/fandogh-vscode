@@ -52,6 +52,6 @@
         "@types/mocha": "^2.2.42"
     },
     "dependencies": {
-        "fandogh": "0.5.0"
+        "fandogh": "^0.8.0"
     }
 }
