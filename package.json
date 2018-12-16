@@ -2,10 +2,13 @@
     "name": "fandogh-vscode",
     "displayName": "fandogh",
     "description": "fandogh vscode extension",
-    "version": "0.0.5",
+    "version": "0.1.0",
     "publisher": "rezahaidari",
-    "repository": "https://github.com/RezaHaidari/fandogh-vscode",
-    "icon": "icon.png",    
+    "repository": {
+        "url": "https://github.com/RezaHaidari/fandogh-vscode",
+        "type": "git"
+    },
+    "icon": "icon.png",
     "engines": {
         "vscode": "^1.29.0"
     },
@@ -37,7 +40,6 @@
                 "command": "extension.show_version_logs",
                 "title": "fandogh version build logs"
             }
-            
         ]
     },
     "scripts": {
