@@ -2,7 +2,7 @@
     "name": "fandogh-vscode",
     "displayName": "fandogh",
     "description": "fandogh vscode extension",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "publisher": "rezahaidari",
     "repository": {
         "url": "https://github.com/RezaHaidari/fandogh-vscode",
