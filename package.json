@@ -19,7 +19,8 @@
         "onCommand:extension.login",
         "onCommand:extension.create_service",
         "onCommand:extension.open_file",
-        "onCommand:extension.show_version_logs"
+        "onCommand:extension.show_version_logs",
+        "onCommand:extension.show_service_logs"
     ],
     "main": "./lib/extension",
     "contributes": {
@@ -39,6 +40,10 @@
             {
                 "command": "extension.show_version_logs",
                 "title": "fandogh version build logs"
+            },
+            {
+                "command": "extension.show_service_logs",
+                "title": "fandogh services logs"
             }
         ]
     },
