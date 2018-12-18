@@ -2,24 +2,26 @@
     "name": "fandogh-vscode",
     "displayName": "fandogh",
     "description": "fandogh vscode extension",
-    "version": "0.0.5",
+    "version": "0.31.0",
     "publisher": "rezahaidari",
-    "repository": "https://github.com/RezaHaidari/fandogh-vscode",
+    "repository": {
+        "url": "https://github.com/RezaHaidari/fandogh-vscode",
+        "type": "git"
+    },
     "icon": "icon.png",
     "engines": {
-        "vscode": "^1.25.0"
+        "vscode": "^1.29.0"
     },
     "categories": [
         "Other"
     ],
     "activationEvents": [
         "onCommand:extension.login",
-        "onCommand:extension.deploy",
-        "onCommand:extension.create_image",
-        "onCommand:extension.create_version",
-        "onCommand:extension.create_service"
+        "onCommand:extension.create_service",
+        "onCommand:extension.open_file",
+        "onCommand:extension.show_version_logs"
     ],
-    "main": "./src/extension",
+    "main": "./lib/extension",
     "contributes": {
         "commands": [
             {
@@ -27,20 +29,16 @@
                 "title": "fandogh login"
             },
             {
-                "command": "extension.deploy",
-                "title": "fandogh deploy"
-            },
-            {
-                "command": "extension.create_image",
-                "title": "fandogh create image"
-            },
-            {
-                "command": "extension.create_version",
-                "title": "fandogh build version"
-            },
-            {
                 "command": "extension.create_service",
-                "title": "fandogh run service"
+                "title": "fandogh deploy app"
+            },
+            {
+                "command": "extension.open_file",
+                "title": "fandogh open config"
+            },
+            {
+                "command": "extension.show_version_logs",
+                "title": "fandogh version build logs"
             }
         ]
     },
@@ -49,13 +47,13 @@
         "test": "node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.6",
+        "typescript": "^3.1.4",
+        "vscode": "^1.1.25",
         "eslint": "^4.11.0",
-        "@types/node": "^7.0.43",
+        "@types/node": "^8.10.25",
         "@types/mocha": "^2.2.42"
     },
     "dependencies": {
-        "fandogh": "0.3.0"
+        "fandogh": "^0.8.0"
     }
 }

@@ -4,14 +4,14 @@ Easy Deploy your dockerized application on fandogh service with Visual studio co
 
 ## Features
 
-- One command deploy
-- Create image
-- Build image version
-- Create and run service
-- ...
+- Easy gui deploy
+- Show build logs
+- Auto create yaml config
+- Easy create and select images and versions
+- ... (more features coming soon!)
 
-
-<!-- \!\[feature X\]\(images/feature-x.png\) -->
+## Demo
+![](fandogh.gif)
 
 
 ## Known Issues
@@ -20,8 +20,4 @@ Easy Deploy your dockerized application on fandogh service with Visual studio co
 
 ## Release Notes
 
-
-### 0.0.1
-
-Initial release of fandogh vscode extension
 
